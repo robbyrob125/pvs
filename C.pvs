@@ -1,0 +1,80 @@
+%%%    Name/LOGIN-ID    _____________________/______________________
+%%%    ACKNOWLEDGMENTS:
+
+th_C: THEORY
+%%%
+%%%   Prove using only (SPLIT), (FLATTEN), (INST), (SKOLEM), (LEMMA), (ASSERT)
+%%%               ~~~~
+
+BEGIN
+
+%%%
+%%% Andy, Bob, Cindy, Dinah, Eve, Fred, and Gary live in the seven houses,
+%%% numbered 1 through 7, on Maple Steet.  Gary's address is 5 greater than
+%%% Bob's.  Bob's address is greater than Andy's.  Dinah's address is
+%%% less than Eve's, whose address is 2 less than Gary's.  Cindy's address
+%%% is less than either Dinah's or Fred's. Who lives where?
+%%%
+
+people: TYPE = {A, B, C, D, E, F, G}
+address: [people -> int]
+
+p,q: VAR people
+
+%%%
+%%% The axiom below asserts that each person's address is between 1 and 7.
+%%%
+Range: AXIOM address(p) = 1
+          or address(p) = 2
+          or address(p) = 3
+          or address(p) = 4
+          or address(p) = 5
+          or address(p) = 6
+          or address(p) = 7
+
+%%%
+%%% The axiom below states that each person's address is unique
+%%%
+
+Unique: AXIOM address(p) = address(q) implies p = q
+
+%%%
+%%% AXIOMs "clue1" through "clue7" translate the problem.
+%%% The lemmas, together, give a solution.  Each lemma
+%%% is introduced as it becomes provable.
+%%%
+
+clue1: AXIOM address(B) + 5 = address(G)
+
+L1: LEMMA address(B) = 1 or address(B) = 2
+
+clue2: AXIOM address(B) > address(A)
+
+L2: LEMMA address(B) = 2
+L3: LEMMA address(A) = 1
+L4: LEMMA address(G) = 7
+
+clue3: AXIOM address(D) < address(E)
+clue4: AXIOM address(E) + 2 = address(G)
+
+L5: LEMMA address(E) = 5
+L6: LEMMA address(D) = 3 or address(D) = 4
+
+clue5: AXIOM address(C) < address(D)
+
+L7: LEMMA address(C) = 3 and address(D) = 4
+
+clue7: AXIOM address(C) < address(F)
+
+L8: LEMMA address(F) = 6
+
+END th_C
+
+
+
+
+
+
+
+
+
